@@ -9,7 +9,7 @@
   解析如下：
   </summary>
 
-  >tip: :seedling: fn不需要用call改变this
+  >:seedling: tip:fn不需要用call改变this
 
   ```javascript
   Array.prototype._map = function (fn) {
@@ -49,7 +49,7 @@ function getIndex(arr){
   解析如下：
   </summary>
 
-  > tip: :seedling: reduce实现
+  > :seedling: tip:reduce实现
 
   ```javascript
   function findMininumIndex_v2(arr) {
