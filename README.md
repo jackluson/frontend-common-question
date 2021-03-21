@@ -6,10 +6,10 @@
 
 <details>
   <summary>
-  解析如下：
+  解析如下:seedling: ：
   </summary>
 
-> :seedling: tip:fn 不需要用 call 改变 this
+> Tip:fn 不需要用 call 改变 this
 
 ```javascript
 Array.prototype._map = function (fn) {
@@ -46,10 +46,10 @@ function getIndex(arr){
 
 <details>
   <summary>
-  解析如下：
+  解析如下:seedling: ：
   </summary>
 
-> :seedling: tip:reduce 实现
+> Tip:reduce 实现
 
 ```javascript
 function findMininumIndex_v2(arr) {
@@ -95,12 +95,12 @@ test();
 
 <details>
   <summary>
-  解析如下：
+  解析如下:seedling: ：
   </summary>
   
 > :notebook: 因为forEach的内部实现原因，forEach本身是不阻塞的（没有返回promise），而forEach的回调是并行执行的，不需要依赖其他回调执行结束在执行
 
-> :seedling: tip: reduce 实现 或者 for 遍历
+> Tip: reduce 实现 或者 for 遍历
 
 ```javascript
 const square = (num) => {
@@ -133,7 +133,7 @@ async function test_v2() {
 <h3>第 159 题：实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject</h3>
 <details>
   <summary>
-  解析如下:notebook:：
+  解析如下:seedling: ：
   </summary>
 
 > 1. 挂载在原型上，利用 async，await
