@@ -48,7 +48,7 @@ function getIndex(arr){
   <summary>
   解析如下：
   </summary>
-> :notebook: 因为forEach的内部实现原因，forEach本身是不阻塞的（没有返回promise），而forEach的回调是并行执行的，不需要依赖其他回调执行结束在执行
+
 > :seedling: tip:reduce 实现
 
 ```javascript
@@ -97,6 +97,8 @@ test();
   <summary>
   解析如下：
   </summary>
+  
+> :notebook: 因为forEach的内部实现原因，forEach本身是不阻塞的（没有返回promise），而forEach的回调是并行执行的，不需要依赖其他回调执行结束在执行
 
 > :seedling: tip: reduce 实现 或者 for 遍历
 
@@ -124,6 +126,66 @@ async function test_v2() {
     console.log(res);
   }
 }
+```
+
+</details>
+<hr>
+<h3>第 159 题：实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject</h3>
+<details>
+  <summary>
+  解析如下:notebook:：
+  </summary>
+
+> 1. 挂载在原型上，利用 async，await
+> 2. 挂载在构造函数上，结合递归
+
+```javascript
+Promise.prototype.retry = function (fn, count) {
+  return new Promise(async (resolve, reject) => {
+    let errorInfo;
+    for (let index = 0; index < count; index++) {
+      try {
+        const result = await fn(index);
+        return resolve(result);
+      } catch (error) {
+        errorInfo = error;
+      }
+    }
+    reject(errorInfo);
+  });
+};
+// 解法二
+Promise.retry_v2 = function (p, times) {
+  return p()
+    .then((res) => res)
+    .catch((res) => {
+      if (times > 1) {
+        times--;
+        return Promise.retry_v2(p, times);
+      } else {
+        return Promise.reject(res);
+      }
+    });
+};
+
+//用例测试
+function getProm() {
+  const n = Math.random();
+  return new Promise((resolve, reject) => {
+    setTimeout(() => (n > 0.9 ? resolve(n) : reject(n)), 1000);
+  });
+}
+const p = new Promise((resolve, reject) => {
+  resolve(2);
+});
+
+Promise.retry_v2(getProm, 3)
+  .then((res) => {
+    console.log("res1", res);
+  })
+  .catch((res) => {
+    console.log("catch", res);
+  });
 ```
 
 </details>
