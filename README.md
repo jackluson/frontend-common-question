@@ -129,6 +129,7 @@ async function test_v2() {
 ```
 
 </details>
+
 <hr>
 <h3>第 159 题：实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject</h3>
 <details>
@@ -186,6 +187,53 @@ Promise.retry_v2(getProm, 3)
   .catch((res) => {
     console.log("catch", res);
   });
+```
+
+</details>
+
+<hr>
+<h3>第 158 题：如何模拟实现 Array.prototype.splice</h3>
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> 1. splice 改变原数组，返回删除数组，第一第二参数判断
+
+```javascript
+Array.prototype._splice = function (index, count, ...items) {
+  let _self = this;
+  const lenght = _self.length;
+  // 指定修改的开始位置（从0计数）。如果超出了数组的长度，则从数组末尾开始添加内容；如果是负值，则表示从数组末位开始的第几位（从-1计数，这意味着-n是倒数第n个元素并且等价于array.length-n）；如果负数的绝对值大于数组的长度，则表示开始位置为第0位。
+  let start =
+    index >= 0
+      ? Math.min(index, lenght)
+      : Math.abs(index) > lenght
+      ? 0
+      : lenght + index;
+  let deleteCount = Math.max(0, count);
+  if (count === undefined) {
+    deleteCount = lenght - start;
+  }
+  let delArr = [];
+  let temp = [];
+  delArr = _self.slice(start, deleteCount + start);
+  temp = [
+    ..._self.slice(0, start),
+    ...items,
+    ..._self.slice(start + deleteCount),
+  ];
+  // 改变this
+  temp.forEach(function (item, index) {
+    _self[index] = item;
+  });
+  _self.length = temp.length; // 改变长度
+
+  return delArr;
+};
+const a1 = a._splice(1);
+
+console.log(a, a1);
 ```
 
 </details>
