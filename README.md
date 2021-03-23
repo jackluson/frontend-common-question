@@ -9,7 +9,7 @@
   解析如下:seedling: ：
   </summary>
 
-> Tip:fn 不需要用 call 改变 this
+> Tip: fn 不需要用 call 改变 this
 
 ```javascript
 Array.prototype._map = function (fn) {
@@ -137,6 +137,8 @@ async function test_v2() {
   解析如下:seedling: ：
   </summary>
 
+> Tip:
+>
 > 1. 挂载在原型上，利用 async，await
 > 2. 挂载在构造函数上，结合递归
 
@@ -198,7 +200,7 @@ Promise.retry_v2(getProm, 3)
   解析如下:seedling: ：
   </summary>
 
-> 1. splice 改变原数组，返回删除数组，第一第二参数判断
+> Tip: splice 改变原数组，返回删除数组，第一第二参数判断
 
 ```javascript
 Array.prototype._splice = function (index, count, ...items) {
@@ -235,5 +237,27 @@ const a1 = a._splice(1);
 
 console.log(a, a1);
 ```
+
+</details>
+
+<hr>
+<h3>第 157 题：浏览器缓存 ETag 里的值是怎么生成的</h3>
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+Etag 一般是 ASCII 字符串组成，可以理解为文件的唯一标识，指纹。没有特定生成 Etag 的方法， 一般来说不同 Web 服务器生成 ETag 的方式不一样，经常用文件内容 hash，last-modified，或者甚至是版本号。
+
+Etag 分类两种：
+
+1. 强验证，如果前缀不是“W/”，则是强验证的，强验证是利用文件字节（ byte to byte）验证的，是严格的，但是通常是消耗性能的。
+2. 弱验证，利用文件信息（比如日期）等生成的，
+
+具体参考：
+
+ETag：[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)
+
+HTTP 条件请求: [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditional_requests](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditional_requests)
 
 </details>
