@@ -304,14 +304,16 @@ HTTP 条件请求: [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditiona
 
 flex 是 flex-grow、flex-shrink、flex-basis 的简称
 flex-grow 默认值为：0
-详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
+>详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
 
 当有剩余空间时，按照 flex-grow 系数比例，分配剩余的空间
 剩余的空间：600 - (300 + 200) = 100。
 子元素的 flex-grow 的值分别为 1，2， 剩余空间用 3 等分来分
 
 > per = 100 / 3 = 33.3333333
+
 > left = 300 + 1 _ 33.33 = 333.33
+
 > right = 200 + 2 _ 33.33 = 266.67
 
 线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
