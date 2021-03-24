@@ -261,3 +261,117 @@ ETag：[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag](https://
 HTTP 条件请求: [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditional_requests](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditional_requests)
 
 </details>
+
+<hr>
+<h3>第 156 题：求最终 left、right 的宽度 (flex-grow)</h3>
+<details>
+  <summary>
+  实例代码如下：
+  </summary>
+
+```html
+<div class="container">
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .container {
+    width: 600px;
+    height: 300px;
+    display: flex;
+  }
+  .left {
+    flex: 1 2 300px;
+    background: red;
+  }
+  .right {
+    flex: 2 1 200px;
+    background: blue;
+  }
+</style>
+```
+
+</details>
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+flex 是 flex-grow、flex-shrink、flex-basis 的简称
+flex-grow 默认值为：0
+详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
+
+当有剩余空间时，按照 flex-grow 系数比例，分配剩余的空间
+剩余的空间：600 - (300 + 200) = 100。
+子元素的 flex-grow 的值分别为 1，2， 剩余空间用 3 等分来分
+
+> per = 100 / 3 = 33.3333333
+> left = 300 + 1 _ 33.33 = 333.33
+> right = 200 + 2 _ 33.33 = 266.67
+
+线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
+
+</details>
+
+<hr>
+<h3>第 155 题：求最终 left、right 的宽度 (flex-shrink)</h3>
+<details>
+  <summary>
+  实例代码如下：
+  </summary>
+
+```html
+<div class="container">
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .container {
+    width: 600px;
+    height: 300px;
+    display: flex;
+  }
+  .left {
+    flex: 1 2 500px;
+    background: red;
+  }
+  .right {
+    flex: 2 1 400px;
+    background: blue;
+  }
+</style>
+```
+
+</details>
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+flex 是 flex-grow、flex-shrink、flex-basis 的简称
+flex-grow 默认值为：0
+详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
+
+当有剩余空间时，按照 flex-grow 系数比例，分配剩余的空间
+剩余的空间：600 - (300 + 200) = 100。
+子元素的 flex-grow 的值分别为 1，2， 剩余空间用 3 等分来分
+
+> per = (500+400-600) / (2 _ 500 + 1 _ 400) = 0.214285714
+
+> left = 500 - 0.214285714 _ 2 _ 500 = 285.714286
+
+> right = 400 - 0.214285714 _ 1 _ 400 = 314.2857144
+
+线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
+
+</details>
