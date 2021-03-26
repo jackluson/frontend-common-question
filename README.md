@@ -304,7 +304,8 @@ HTTP 条件请求: [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditiona
 
 flex 是 flex-grow、flex-shrink、flex-basis 的简称
 flex-grow 默认值为：0
->详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
+
+> 详情参考：[https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
 
 当有剩余空间时，按照 flex-grow 系数比例，分配剩余的空间
 剩余的空间：600 - (300 + 200) = 100。
@@ -312,9 +313,9 @@ flex-grow 默认值为：0
 
 > per = 100 / 3 = 33.3333333
 
-> left = 300 + 1 _ 33.33 = 333.33
+> left = 300 + 1 \_ 33.33 = 333.33
 
-> right = 200 + 2 _ 33.33 = 266.67
+> right = 200 + 2 \_ 33.33 = 266.67
 
 线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
 
@@ -375,5 +376,22 @@ flex-grow 默认值为：0
 > right = 400 - 0.214285714 _ 1 _ 400 = 314.2857144
 
 线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
+
+</details>
+
+<hr>
+<h3>第 154 题：弹性盒子中 flex: 0 1 auto 表示什么意思</h3>
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> flex 是 flxe-grow、flex-shrink、flex-basis 缩写形式
+
+> flex-grow：指的是定义了如果宽度有剩余时，如何分配宽度，默认值是 0
+
+> flex-shrink：指的是定义了如果宽度不足时，如何分配宽度，默认值是 1
+
+> flex-basis: 指的是盒子初始宽度，默认值是 auto，如果不设置的话，默认就是盒子原始宽度
 
 </details>
