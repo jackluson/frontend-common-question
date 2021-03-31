@@ -450,3 +450,42 @@ multiRequest(urls, 4).then((res) => {
 ```
 
 </details>
+
+<hr>
+<h3>第 152 题：实现一个 normalize 函数，能将输入的特定的字符串转化为特定的结构化数据
+字符串仅由小写字母和 [] 组成，且字符串不会包含多余的空格。
+
+1. 示例一: 'abc' --> {value: 'abc'}
+2. 示例二：'[abc[bcd[def]]]' --> {value: 'abc', children: {value: 'bcd', children: {value: 'def'}}}
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip:
+>
+> 1. split 切割成数组
+> 2. 利用 reduce
+
+```javascript
+function normalize(str) {
+  let result = {};
+  return str
+    .split(/[\[\]]+/)
+    .filter(Boolean)
+    .reduce((pre, cur, index, arr) => {
+      pre.value = cur;
+      if (arr.length - 1 === index) {
+        return result;
+      } else {
+        pre.children = {};
+        return pre.children;
+      }
+    }, result);
+}
+const str = "[abc[bcd[def][hf]]]";
+const res = normalize(str);
+```
+
+</details>
