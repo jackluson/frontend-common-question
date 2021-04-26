@@ -2,7 +2,7 @@
 
 > 本仓库是[Daily-Interview-Question](https://github.com/Advanced-Frontend/Daily-Interview-Question) 的问题回答
 
-<h3>第 162 题：实现对象的 Map 函数类似 Array.prototype.map</h3>
+### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
   <summary>
@@ -487,6 +487,35 @@ function normalize(str) {
 }
 const str = "[abc[bcd[def][hf]]]";
 const res = normalize(str);
+```
+
+</details>
+
+<hr>
+<h3>第 151 题：用最简洁代码实现indexOf方法
+</h3>
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip:
+>
+> 1. 注意 indexOf 第二个参数
+
+```javascript
+Array.prototype._indexOf = (val,start=0)
+  const _self = this;
+  let indexResult = -1;
+  for(let i = start; i <= _self.length; i++){
+    const item = _self[i]
+    if(item === val) return i;
+  }
+  return indexResult;
+}
+const res = [1, 2, 3, 4]._indexOf(23);
+console.log(res);
 ```
 
 </details>
