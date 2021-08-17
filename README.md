@@ -313,9 +313,9 @@ flex-grow 默认值为：0
 
 > per = 100 / 3 = 33.3333333
 
-> left = 300 + 1 \_ 33.33 = 333.33
+> left = 300 + 1 \* 33.33 = 333.33
 
-> right = 200 + 2 \_ 33.33 = 266.67
+> right = 200 + 2 \* 33.33 = 266.67
 
 线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
 
@@ -369,11 +369,11 @@ flex-grow 默认值为：0
 剩余的空间：600 - (300 + 200) = 100。
 子元素的 flex-grow 的值分别为 1，2， 剩余空间用 3 等分来分
 
-> per = (500+400-600) / (2 _ 500 + 1 _ 400) = 0.214285714
+> per = (500+400-600) / (2 \* 500 + 1 \* 400) = 0.214285714
 
-> left = 500 - 0.214285714 _ 2 _ 500 = 285.714286
+> left = 500 - 0.214285714 \* 2 \* 500 = 285.714286
 
-> right = 400 - 0.214285714 _ 1 _ 400 = 314.2857144
+> right = 400 - 0.214285714 \* 1 \* 400 = 314.2857144
 
 线上 demo 可以看：[https://replit.com/@jackluson/flex-grow#index.html](https://replit.com/@jackluson/flex-grow#index.html)
 
@@ -467,7 +467,7 @@ multiRequest(urls, 4).then((res) => {
 > Tip:
 >
 > 1. split 切割成数组
-> 2. 利用 reduce
+> 2. 利用 reduce，对象引用类型
 
 ```javascript
 function normalize(str) {
