@@ -4,7 +4,6 @@ Promise.prototype.retry = function (fn, count) {
     for (let index = 0; index < count; index++) {
       try {
         const result = await fn(index);
-        console.log("result", result);
         return resolve(result);
       } catch (error) {
         errorInfo = error;
