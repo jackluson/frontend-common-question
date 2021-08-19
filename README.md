@@ -1,6 +1,67 @@
 # frontend-common-question
 
 > 本仓库是[Daily-Interview-Question](https://github.com/Advanced-Frontend/Daily-Interview-Question) 的问题回答
+### 第 182 题：实现一个异步求和函数
+
+提供一个异步 add 方法如下，需要实现一个 await sum(...args) 函数：
+
+```javascript
+function asyncAdd(a, b, callback) {
+  setTimeout(function () {
+    callback(null, a + b);
+  }, 1000);
+}
+```
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip:
+>
+> 1. 利用 reduce，且 reduce 的初始值为 Promise.resolve()
+> 2. await pre
+
+```javascript
+function asyncAdd(a, b, callback) {
+  setTimeout(function () {
+    callback(null, a + b);
+  }, 1000);
+}
+
+async function sum(...args) {
+  return new Promise(async (outResolve, outReject) => {
+    const res = await args
+      .reduce(async (pre, cur) => {
+        pre = await pre;
+        const temp = await new Promise((resolve, reject) => {
+          asyncAdd(pre, cur, (error, data) => {
+            if (error) reject();
+            resolve(data);
+          });
+        });
+        return temp;
+      }, Promise.resolve(0))
+      .catch(() => {
+        outReject("error");
+      });
+    outResolve(res);
+  });
+}
+
+async function main() {
+  const res = await sum(1, 2, 3);
+  console.log("res", res);
+}
+
+main();
+```
+
+</details>
+
+<hr>
+
 ### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
