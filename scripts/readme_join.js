@@ -18,7 +18,6 @@ async function start() {
       const indexB = +b.match(reg)[1];
       return indexA > indexB ? -1 : 1;
     });
-  console.log("sortPaths", sortPaths);
   let content = "";
   for (let index = 0; index < sortPaths.length; index++) {
     const item = sortPaths[index];
@@ -26,9 +25,7 @@ async function start() {
     content = `${content}${index === 0 ? "" : "\n<hr>\n\n"}${fileContent}`;
   }
   const headPath = path.join(process.cwd(), "docs/head.md");
-  console.log("headPath", headPath);
   const readmeContent = await readFileAsync(headPath, "utf8");
-
   await writeFileAsync("README.md", readmeContent + content);
 }
 
