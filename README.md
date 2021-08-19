@@ -1,7 +1,6 @@
 # frontend-common-question
 
 > 本仓库是[Daily-Interview-Question](https://github.com/Advanced-Frontend/Daily-Interview-Question) 的问题回答
-
 ### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
@@ -32,7 +31,8 @@ console.log("results", results);
 </details>
 
 <hr>
-<h3>第 161 题：用最精炼的代码实现数组非零非负最小值index</h3>
+
+### 第 161 题：用最精炼的代码实现数组非零非负最小值 index
 
 例如：[10,21,0,-7,35,7,9,23,18] 输出 5, 7 最小
 
@@ -66,7 +66,9 @@ function findMininumIndex_v2(arr) {
 </details>
 
 <hr>
-<h3>第 160 题：输出以下代码运行结果，为什么？如果希望每隔 1s 输出一个结果，应该如何改造？注意不可改动 square 方法</h3>
+
+### 第 160 题：输出以下代码运行结果，为什么？如果希望每隔 1s 输出一个结果，应该如何改造？注意不可改动 square 方法
+
 <details>
   <summary>
   实例代码如下：
@@ -93,45 +95,10 @@ test();
 
 </details>
 
-<details>
-  <summary>
-  解析如下:seedling: ：
-  </summary>
-  
-> :notebook: 因为forEach的内部实现原因，forEach本身是不阻塞的（没有返回promise），而forEach的回调是并行执行的，不需要依赖其他回调执行结束在执行
-
-> Tip: reduce 实现 或者 for 遍历
-
-```javascript
-const square = (num) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(num * num);
-    }, 3000);
-  });
-};
-// 解法一：
-async function test() {
-  await list.reduce((_, x) => {
-    return _.then(() => {
-      return square(x);
-    }).then(console.log);
-  }, Promise.resolve());
-}
-
-// 解法二：
-async function test_v2() {
-  for (const x of list) {
-    const res = await square(x);
-    console.log(res);
-  }
-}
-```
-
-</details>
-
 <hr>
-<h3>第 159 题：实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject</h3>
+
+### 第 159 题：实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject
+
 <details>
   <summary>
   解析如下:seedling: ：
@@ -194,7 +161,9 @@ Promise.retry_v2(getProm, 3)
 </details>
 
 <hr>
-<h3>第 158 题：如何模拟实现 Array.prototype.splice</h3>
+
+### 第 158 题：如何模拟实现 Array.prototype.splice
+
 <details>
   <summary>
   解析如下:seedling: ：
@@ -241,7 +210,9 @@ console.log(a, a1);
 </details>
 
 <hr>
-<h3>第 157 题：浏览器缓存 ETag 里的值是怎么生成的</h3>
+
+### 第 157 题：浏览器缓存 ETag 里的值是怎么生成的
+
 <details>
   <summary>
   解析如下:seedling: ：
@@ -263,7 +234,9 @@ HTTP 条件请求: [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Conditiona
 </details>
 
 <hr>
-<h3>第 156 题：求最终 left、right 的宽度 (flex-grow)</h3>
+
+### 第 156 题：求最终 left、right 的宽度 (flex-grow)
+
 <details>
   <summary>
   实例代码如下：
@@ -322,7 +295,9 @@ flex-grow 默认值为：0
 </details>
 
 <hr>
-<h3>第 155 题：求最终 left、right 的宽度 (flex-shrink)</h3>
+
+### 第 155 题：求最终 left、right 的宽度 (flex-shrink)
+
 <details>
   <summary>
   实例代码如下：
@@ -380,7 +355,9 @@ flex-grow 默认值为：0
 </details>
 
 <hr>
-<h3>第 154 题：弹性盒子中 flex: 0 1 auto 表示什么意思</h3>
+
+### 第 154 题：弹性盒子中 flex: 0 1 auto 表示什么意思
+
 <details>
   <summary>
   解析如下:seedling: ：
@@ -397,7 +374,9 @@ flex-grow 默认值为：0
 </details>
 
 <hr>
-<h3>第 153 题：实现一个批量请求函数 multiRequest(urls, maxNum)</h3>
+
+### 第 153 题：实现一个批量请求函数 multiRequest(urls, maxNum)
+
 要求如下：
 
 1. 要求最大并发数 maxNum
@@ -452,9 +431,8 @@ multiRequest(urls, 4).then((res) => {
 </details>
 
 <hr>
-<h3>第 152 题：实现一个 normalize 函数，能将输入的特定的字符串转化为特定的结构化数据
-字符串仅由小写字母和 [] 组成，且字符串不会包含多余的空格。
-</h3>
+
+### 第 152 题：实现一个 normalize 函数，能将输入的特定的字符串转化为特定的结构化数据, 字符串仅由小写字母和 [] 组成，且字符串不会包含多余的空格。
 
 1. 示例一: 'abc' --> {value: 'abc'}
 2. 示例二：'[abc[bcd[def]]]' --> {value: 'abc', children: {value: 'bcd', children: {value: 'def'}}}
@@ -492,8 +470,8 @@ const res = normalize(str);
 </details>
 
 <hr>
-<h3>第 151 题：用最简洁代码实现indexOf方法
-</h3>
+
+### 第 151 题：用最简洁代码实现 indexOf 方法
 
 <details>
   <summary>
@@ -521,6 +499,54 @@ console.log(res);
 </details>
 
 <hr>
+
+<h3>第 5 题：介绍下深度优先遍历和广度优先遍历，如何实现？
+</h3>
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> :notebook: 深度遍历 -- 从一个顶点 v 出发，访问 v 没有被访问过的邻接点，然后再依次以没有被访问过的邻接点出发进行深度优先遍历
+
+> 广度优先 -- 从顶点 v 出发，访问 v 相邻的节点，遍历完之后，再遍历其相邻节点的相邻节点
+
+```javascript
+function dfs(root, nodes = []) {
+  if (root) {
+    nodes.push(root);
+    if (root.children) {
+      for (let index = 0; index < root.children.length; index++) {
+        dfs(root.children[index], nodes);
+      }
+    }
+  }
+  return nodes;
+}
+function bfs(root) {
+  let nodes = [],
+    queue = [];
+  if (root) {
+    queue.push(root);
+  }
+  while (queue.length) {
+    const curNode = queue.shift();
+    nodes.push(curNode);
+    if (curNode.children) {
+      for (let index = 0; index < curNode.children.length; index++) {
+        queue.push(curNode.children[index]);
+      }
+    }
+  }
+  return nodes;
+}
+```
+
+</details>
+
+<hr>
+
 <h3>第 3 题：什么是防抖和节流？有什么区别？如何实现
 </h3>
 
