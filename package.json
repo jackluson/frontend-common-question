@@ -1,0 +1,24 @@
+{
+  "name": "frontend-common-question",
+  "version": "1.0.0",
+  "description": "frontend common question and answer",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "join": "node scripts/readme_join.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackluson/frontend-common-question.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackluson/frontend-common-question/issues"
+  },
+  "homepage": "https://github.com/jackluson/frontend-common-question#readme"
+}
