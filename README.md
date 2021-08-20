@@ -62,6 +62,41 @@ main();
 
 <hr>
 
+### 第 175 题：实现颜色转换 'rgb(255, 255, 255)' -> '#FFFFFF' 的多种思路
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip: 1. 利用 replace， 拼接$1, $2, $3, 2. 先提炼 rgb 到数组，然后拼接
+
+```javascript
+function rgb2hex(str) {
+  const reg = /^rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)$/;
+  return str.replace(reg, (_, $1, $2, $3) => {
+    const firstByte = parseInt($1).toString(16).padStart(2, 0).toUpperCase();
+    const secondByte = parseInt($2).toString(16).padStart(2, 0).toUpperCase();
+    const thridByte = parseInt($3).toString(16).padStart(2, 0).toUpperCase();
+    return `#${firstByte}${secondByte}${thridByte}`;
+  });
+}
+
+function rgb2hexV2(str) {
+  // const reg = /^rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)$/;
+  const matchRes = str.match(/\d+/g);
+  console.log("matchRes", matchRes);
+  return matchRes.reduce(
+    (pre, cur) => pre + parseInt(cur).toString(16).padStart(2, 0).toUpperCase(),
+    "#"
+  );
+}
+```
+
+</details>
+
+<hr>
+
 ### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
