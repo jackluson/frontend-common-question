@@ -792,6 +792,58 @@ console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 
 <hr>
 
+### 第 80 题：介绍下 Promise.all 使用、原理实现及错误处理
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip: Promise.all() 方法接收一个 promise 的 iterable 类型（注：Array，Map，Set 都属于 ES6 的 iterable 类型）的输入，并且只返回一个 Promise 实例， 那个输入的所有 promise 的 resolve 回调的结果是一个数组。这个 Promise 的 resolve 回调执行是在所有输入的 promise 的 resolve 回调都结束，或者输入的 iterable 里没有 promise 了的时候。它的 reject 回调执行是，只要任何一个输入的 promise 的 reject 回调执行或者输入不合法的 promise 就会立即抛出错误，并且 reject 的是第一个抛出的错误信息。
+
+```javascript
+Promise.myAll = function (promises) {
+  return new Promise((resolve, reject) => {
+    let promiseRes = [];
+    promises.forEach(async (pr) => {
+      if (!(pr instanceof Promise)) {
+        pr = pr;
+      }
+      try {
+        const temp = await pr;
+        promiseRes.push(temp);
+        if (promiseRes.length === promises.length) {
+          resolve(promiseRes);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+};
+
+const promise1 = Promise.resolve(3);
+const promise2 = 42;
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, "foo");
+});
+// const pErr = new Promise((resolve, reject) => {
+//   reject("总是失败");
+// });
+
+Promise.myAll([promise1, promise2, promise3])
+  .then((values) => {
+    console.log(values);
+  })
+  .catch((err) => {
+    console.log("err", err);
+  });
+```
+
+</details>
+
+<hr>
+
 ### 第 14 题：情人节福利题，如何实现一个 new
 
 <details>
