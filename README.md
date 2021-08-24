@@ -62,6 +62,54 @@ main();
 
 <hr>
 
+### 第 181 题：Promise.prototype.finally 的作用，如何自己实现 Promise.prototype.finally
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip: Promise.prototype.myFinally 函数的 this，就是当前实例
+
+```javascript
+Promise.prototype.myFinally = async function (cb) {
+  const pr = this;
+  try {
+    await pr;
+  } finally {
+    cb && cb();
+  }
+};
+
+const start = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const temp = Math.round(Math.random());
+      if (temp > 0.5) {
+        resolve(temp);
+      } else {
+        reject(temp);
+      }
+    }, 2000);
+  });
+};
+
+start()
+  .then((res) => {
+    console.log("res", res);
+  })
+  .catch((err) => {
+    console.log("err", err);
+  })
+  .myFinally(() => {
+    console.log("finally");
+  });
+```
+
+</details>
+
+<hr>
+
 ### 第 175 题：实现颜色转换 'rgb(255, 255, 255)' -> '#FFFFFF' 的多种思路
 
 <details>
