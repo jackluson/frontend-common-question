@@ -849,6 +849,50 @@ console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 
 <hr>
 
+### 第 89 题：设计并实现 Promise.race()
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip: 1. Promise.race(iterable) 方法返回一个 promise，一旦迭代器中的某个 promise 解决或拒绝，返回的 promise 就会解决或拒绝
+> 输出结果按照 promise 顺序输出
+
+```javascript
+Promise.myRace = function (alls) {
+  return new Promise((resolve, reject) => {
+    alls.forEach((pr) => {
+      if (!(pr instanceof Promise)) {
+        pr = Promise.resolve(pr);
+      }
+      pr.then(resolve, reject);
+    });
+  });
+};
+
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 500, "one");
+});
+
+const promise2 = new Promise((resolve, reject) => {
+  setTimeout(reject, 100, "two");
+});
+
+Promise.myRace([34, promise1, promise2])
+  .then((value) => {
+    console.log(value);
+    // Both resolve, but promise2 is faster
+  })
+  .catch((err) => {
+    console.log("err", err);
+  });
+```
+
+</details>
+
+<hr>
+
 ### 第 80 题：介绍下 Promise.all 使用、原理实现及错误处理
 
 <details>
@@ -860,18 +904,37 @@ console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 > 输出结果按照 promise 顺序输出
 
 ```javascript
+const isIterable = (data, reject) => {
+  const type = typeof data;
+  if (!data[Symbol.iterator]) {
+    if (reject) {
+      reject(
+        new TypeError(
+          `${type} ${data} is not iterable (cannot read property Symbol(Symbol.iterator))`
+        )
+      );
+    } else {
+      throw new TypeError(
+        `${type} ${data} is not iterable (cannot read property Symbol(Symbol.iterator))`
+      );
+    }
+  }
+};
+
 Promise.myAll = function (promises) {
   return new Promise((resolve, reject) => {
+    isIterable(promises, reject); // 判断是否是迭代对象
     let promiseRes = [];
-    promises.forEach(async (pr, index) => {
+    const promiseArray = [...promises];
+    promiseArray.forEach(async (pr, index) => {
       if (!(pr instanceof Promise)) {
-        pr = pr;
+        pr = Promise.resolve(pr);
       }
       try {
         const temp = await pr;
-        promiseRes.splice(index, 0, temp);
         // promiseRes.push(temp);
-        if (promiseRes.length === promises.length) {
+        promiseRes.splice(index, 0, temp);
+        if (promiseRes.length === promiseArray.length) {
           resolve(promiseRes);
         }
       } catch (error) {
@@ -889,10 +952,22 @@ const promise3 = new Promise((resolve, reject) => {
 // const pErr = new Promise((resolve, reject) => {
 //   reject("总是失败");
 // });
+let myMap = new Map();
 
-Promise.myAll([promise1, promise2, promise3])
+let keyObj = {};
+let keyFunc = function () {};
+let keyString = "a string";
+
+// 添加键
+myMap.set(keyString, promise3);
+myMap.set(keyObj, promise1);
+myMap.set(keyFunc, promise2);
+let iterable = new Set([promise3, promise1, promise2, promise3, 3]);
+let arr = [promise3, promise1, promise2, promise3, 3];
+
+Promise.myAll(arr)
   .then((values) => {
-    console.log(values);
+    console.log("values", values);
   })
   .catch((err) => {
     console.log("err", err);
