@@ -97,7 +97,7 @@ function rgb2hexV2(str) {
 
 <hr>
 
-### 第 175 题： JS 异步笔试题，请写出下面代码的运行结果（哔哩哔哩）
+### 第 172 题： JS 异步笔试题，请写出下面代码的运行结果（哔哩哔哩）
 
 ```javascript
 var date = new Date();
