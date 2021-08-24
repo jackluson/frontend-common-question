@@ -97,6 +97,36 @@ function rgb2hexV2(str) {
 
 <hr>
 
+### 172. JS 异步笔试题，请写出下面代码的运行结果（哔哩哔哩）
+
+```javascript
+var date = new Date();
+
+console.log(1, new Date() - date);
+
+setTimeout(() => {
+  console.log(2, new Date() - date);
+}, 500);
+
+Promise.resolve().then(console.log(3, new Date() - date));
+
+while (new Date() - date < 1000) {}
+
+console.log(4, new Date() - date);
+```
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+注：首先then函数的参数如何不是函数的话，立即执行
+
+1，3，4，2
+
+</details>
+
+<hr>
+
 ### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
