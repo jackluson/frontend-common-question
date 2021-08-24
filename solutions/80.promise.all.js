@@ -3,18 +3,37 @@
 2. 输出结果按照promise顺序输出
 */
 
+const isIterable = (data, reject) => {
+  const type = typeof data;
+  if (!data[Symbol.iterator]) {
+    if (reject) {
+      reject(
+        new TypeError(
+          `${type} ${data} is not iterable (cannot read property Symbol(Symbol.iterator))`
+        )
+      );
+    } else {
+      throw new TypeError(
+        `${type} ${data} is not iterable (cannot read property Symbol(Symbol.iterator))`
+      );
+    }
+  }
+};
+
 Promise.myAll = function (promises) {
   return new Promise((resolve, reject) => {
+    isIterable(promises, reject); // 判断是否是迭代对象
     let promiseRes = [];
-    promises.forEach(async (pr, index) => {
+    const promiseArray = [...promises];
+    promiseArray.forEach(async (pr, index) => {
       if (!(pr instanceof Promise)) {
-        pr = pr;
+        pr = Promise.resolve(pr);
       }
       try {
         const temp = await pr;
         // promiseRes.push(temp);
         promiseRes.splice(index, 0, temp);
-        if (promiseRes.length === promises.length) {
+        if (promiseRes.length === promiseArray.length) {
           resolve(promiseRes);
         }
       } catch (error) {
@@ -32,10 +51,22 @@ const promise3 = new Promise((resolve, reject) => {
 // const pErr = new Promise((resolve, reject) => {
 //   reject("总是失败");
 // });
+let myMap = new Map();
 
-Promise.myAll([promise3, promise2, promise1])
+let keyObj = {};
+let keyFunc = function () {};
+let keyString = "a string";
+
+// 添加键
+myMap.set(keyString, promise3);
+myMap.set(keyObj, promise1);
+myMap.set(keyFunc, promise2);
+let iterable = new Set([promise3, promise1, promise2, promise3, 3]);
+let arr = [promise3, promise1, promise2, promise3, 3];
+
+Promise.myAll(arr)
   .then((values) => {
-    console.log(values);
+    console.log("values", values);
   })
   .catch((err) => {
     console.log("err", err);
