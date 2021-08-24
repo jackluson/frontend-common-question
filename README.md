@@ -163,6 +163,63 @@ Promise.myAny([pErr, pSlow, pFast]).then((value) => {
 
 <hr>
 
+### 第 179 题：Promise.allSettled 的作用，如何自己实现 Promise.allSettled
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip: 该 Promise.allSettled()方法返回一个在所有给定的 promise 都已经 fulfilled 或 rejected 后的 promise，并带有一个对象数组，每个对象表示对应的 promise 结果。
+
+> 当您有多个彼此不依赖的异步任务成功完成时，或者您总是想知道每个 promise 的结果时，通常使用它。
+
+> 相比之下，Promise.all() 更适合彼此相互依赖或者在其中任何一个 reject 时立即结束。参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)
+
+```javascript
+Promise.myAny = function (alls) {
+  return new Promise(async (resolve, reject) => {
+    const errInfo = {
+      name: "All promises were rejected",
+      message: "AggregateError",
+      errors: [],
+    };
+    alls.forEach(async (pr) => {
+      try {
+        const tempRes = await pr;
+        resolve(tempRes);
+      } catch (err) {
+        errInfo.errors.push(err);
+        if (errInfo.errors.length === alls.length) {
+          reject(errInfo);
+        }
+      }
+    });
+  });
+};
+
+const pErr = new Promise((resolve, reject) => {
+  reject("总是失败");
+});
+
+const pSlow = new Promise((resolve, reject) => {
+  setTimeout(resolve, 500, "最终完成");
+});
+
+const pFast = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, "很快完成");
+});
+
+Promise.myAny([pErr, pSlow, pFast]).then((value) => {
+  console.log(value);
+  // pFast fulfils first
+});
+```
+
+</details>
+
+<hr>
+
 ### 第 175 题：实现颜色转换 'rgb(255, 255, 255)' -> '#FFFFFF' 的多种思路
 
 <details>
@@ -799,19 +856,21 @@ console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
   解析如下:seedling: ：
   </summary>
 
-> Tip: Promise.all() 方法接收一个 promise 的 iterable 类型（注：Array，Map，Set 都属于 ES6 的 iterable 类型）的输入，并且只返回一个 Promise 实例， 那个输入的所有 promise 的 resolve 回调的结果是一个数组。这个 Promise 的 resolve 回调执行是在所有输入的 promise 的 resolve 回调都结束，或者输入的 iterable 里没有 promise 了的时候。它的 reject 回调执行是，只要任何一个输入的 promise 的 reject 回调执行或者输入不合法的 promise 就会立即抛出错误，并且 reject 的是第一个抛出的错误信息。
+> Tip: 1. Promise.all() 方法接收一个 promise 的 iterable 类型（注：Array，Map，Set 都属于 ES6 的 iterable 类型）的输入，并且只返回一个 Promise 实例， 那个输入的所有 promise 的 resolve 回调的结果是一个数组。这个 Promise 的 resolve 回调执行是在所有输入的 promise 的 resolve 回调都结束，或者输入的 iterable 里没有 promise 了的时候。它的 reject 回调执行是，只要任何一个输入的 promise 的 reject 回调执行或者输入不合法的 promise 就会立即抛出错误，并且 reject 的是第一个抛出的错误信息。
+> 输出结果按照 promise 顺序输出
 
 ```javascript
 Promise.myAll = function (promises) {
   return new Promise((resolve, reject) => {
     let promiseRes = [];
-    promises.forEach(async (pr) => {
+    promises.forEach(async (pr, index) => {
       if (!(pr instanceof Promise)) {
         pr = pr;
       }
       try {
         const temp = await pr;
-        promiseRes.push(temp);
+        promiseRes.splice(index, 0, temp);
+        // promiseRes.push(temp);
         if (promiseRes.length === promises.length) {
           resolve(promiseRes);
         }
