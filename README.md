@@ -176,22 +176,23 @@ Promise.myAny([pErr, pSlow, pFast]).then((value) => {
 
 > 相比之下，Promise.all() 更适合彼此相互依赖或者在其中任何一个 reject 时立即结束。参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)
 
+> 结果按照 promise 数组顺序输出
+
 ```javascript
-Promise.myAny = function (alls) {
+Promise.myAllSettled = function (alls) {
   return new Promise(async (resolve, reject) => {
-    const errInfo = {
-      name: "All promises were rejected",
-      message: "AggregateError",
-      errors: [],
-    };
-    alls.forEach(async (pr) => {
+    const res = [];
+    alls.forEach(async (pr, index) => {
       try {
-        const tempRes = await pr;
-        resolve(tempRes);
-      } catch (err) {
-        errInfo.errors.push(err);
-        if (errInfo.errors.length === alls.length) {
-          reject(errInfo);
+        const value = await pr;
+        res.splice(index, 0, { status: "fulfilled", value });
+        if (res.length === alls.length) {
+          resolve(res);
+        }
+      } catch (reason) {
+        res.splice(index, 0, { status: "rejected", reason });
+        if (res.length === alls.length) {
+          resolve(res);
         }
       }
     });
@@ -210,9 +211,8 @@ const pFast = new Promise((resolve, reject) => {
   setTimeout(resolve, 100, "很快完成");
 });
 
-Promise.myAny([pErr, pSlow, pFast]).then((value) => {
+Promise.myAllSettled([pErr, pSlow, pFast]).then((value) => {
   console.log(value);
-  // pFast fulfils first
 });
 ```
 
