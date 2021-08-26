@@ -19,3 +19,6 @@ function throttle(fn, delay) {
     }, delay);
   };
 }
+
+exports.debounce = debounce;
+exports.throttle = throttle;

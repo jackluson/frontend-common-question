@@ -8,7 +8,7 @@
   },
   "scripts": {
     "join": "node scripts/readme_join.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/jackluson/frontend-common-question/issues"
   },
-  "homepage": "https://github.com/jackluson/frontend-common-question#readme"
+  "homepage": "https://github.com/jackluson/frontend-common-question#readme",
+  "devDependencies": {
+    "mocha": "^9.1.0"
+  }
 }
