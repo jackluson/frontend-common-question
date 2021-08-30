@@ -285,6 +285,51 @@ console.log(4, new Date() - date);
 
 <hr>
 
+### 第 166 题：闭包 JS 基础 编程题 (字节)
+
+示例代码如下：
+
+```javascript
+var foo = function(...args) { // 要求实现函数体}
+var f1 = foo(1,2,3); f1.getValue(); // 6 输出是参数的和
+var f2 = foo(1)(2,3); f2.getValue(); // 6
+var f3 = foo(1)(2)(3)(4); f3.getValue(); // 10
+```
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+Tip:
+
+> 1. 返回值是一个函数
+> 2. 动态参数，拼接参数，getValue 统一计算
+
+```javascript
+function foo(...args) {
+  let addArgs = [...args];
+  function fn(...innerArgs) {
+    addArgs = [...addArgs, ...innerArgs];
+    return fn;
+  }
+  fn.getValue = function () {
+    return addArgs.reduce((pre, cur) => {
+      return pre + cur;
+    }, 0);
+  };
+  return fn;
+}
+
+const sum = foo(1, 2, 3)(2)(3).getValue();
+// const sum = foo(1, 2, 3).getValue();
+console.log("sum", sum);
+```
+
+</details>
+
+<hr>
+
 ### 第 162 题：实现对象的 Map 函数类似 Array.prototype.map
 
 <details>
