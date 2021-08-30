@@ -355,7 +355,7 @@ function findMininumIndex_v2(arr) {
 
 <details>
   <summary>
-  实例代码如下：
+  示例代码如下：
   </summary>
 
 ```javascript
@@ -375,6 +375,52 @@ function test() {
   });
 }
 test();
+```
+
+</details>
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+> Tip:
+>
+> 1. 利用 reduce，且 reduce 的初始值为 Promise.resolve()
+> 2. await pre
+
+```javascript
+const list = [1, 2, 3];
+const square = (num) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(num * num);
+    }, 1000);
+  });
+};
+
+// function test() {
+//   list.forEach(async (x) => {
+//     const res = await square(x);
+//     console.log(res);
+//   });
+// }
+
+async function test() {
+  await list.reduce((_, x) => {
+    return _.then(() => {
+      return square(x);
+    }).then(console.log);
+  }, Promise.resolve());
+}
+
+async function test_v2() {
+  for (const x of list) {
+    const res = await square(x);
+    console.log(res);
+  }
+}
+test_v2();
 ```
 
 </details>
