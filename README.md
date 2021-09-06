@@ -1125,6 +1125,109 @@ console.log("obj", obj);
 
 <hr>
 
+### 第 6 题：请分别用深度优先思想和广度优先思想实现一个拷贝函数？
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+
+```js
+// 深度优先
+
+function deepCloneDFS(data, weakMap = new WeakMap()) {
+  if (!["object", "function"].includes(typeof data) || data === null)
+    return data;
+  if (typeof data === "function") return eval(`(${data.toString()})`);
+  // weakMap 处理循环引用问题
+  if (weakMap.has(data)) return weakMap.get(data);
+  const target = Array.isArray(data) ? [] : {};
+  weakMap.set(data, target);
+  // 没有处理symbol类型
+  for (const key in data) {
+    if (Object.hasOwnProperty.call(data, key)) {
+      const item = data[key];
+      target[key] = deepCloneDFS(item, weakMap);
+    }
+  }
+  return target;
+}
+
+// 广度优先
+function deepCloneBFS(data, weakMap = new WeakMap()) {
+  if (!["object", "function"].includes(typeof data) || data === null)
+    return data;
+  if (typeof data === "function") return eval(`(${data.toString()})`);
+
+  const target = Array.isArray(data) ? [] : {};
+  weakMap.set(data, target);
+
+  queueKeys = [];
+  for (const key in data) {
+    if (Object.hasOwnProperty.call(data, key)) {
+      queueKeys.push({
+        key,
+        ref: target,
+        value: data[key],
+      });
+    }
+  }
+  while (queueKeys.length) {
+    const cur = queueKeys.shift();
+    const { key: curKey, ref, value: curValue } = cur;
+    if (!["object"].includes(typeof curValue) || curValue === null) {
+      ref[curKey] = deepCloneBFS(curValue);
+    } else if (typeof curValue === "object") {
+      // 处理缓存引用问题
+      if (weakMap.has(curValue)) {
+        ref[curKey] = weakMap.get(curValue);
+      } else {
+        ref[curKey] = Array.isArray(curValue) ? [] : {};
+        // 没有处理symbol类型
+        for (const key in curValue) {
+          if (Object.hasOwnProperty.call(curValue, key)) {
+            queueKeys.push({
+              key,
+              ref: ref[curKey],
+              value: curValue[key],
+            });
+          }
+        }
+      }
+    } else {
+      // console.log("curKey", curKey);
+      target[curKey] = curValue;
+    }
+  }
+  return target;
+}
+
+// 没有Symbol类型key与值
+var obj = {
+  name: "objname",
+  age: "334",
+  children: {
+    id: 3,
+    obj: {
+      inage: 4,
+    },
+  },
+  arr: [2, 3, 4],
+  fn: (a) => {
+    return a;
+  }, // 函数类型
+};
+obj.children.parent = obj; // 循环引用问题
+
+var deepObj = deepCloneDFS(obj);
+console.log("deepObj", deepObj);
+console.log("deepObj", deepObj.children.parent === deepObj);
+```
+
+</details>
+
+<hr>
+
 ### 第 5 题：介绍下深度优先遍历和广度优先遍历，如何实现？
 
 <details>
