@@ -1090,6 +1090,53 @@ Promise.myAll(arr)
 
 <hr>
 
+### 第 54 题：冒泡排序如何实现，时间复杂度是多少， 还可以如何改进？
+
+<details>
+  <summary>
+  解析如下:seedling: ：
+  </summary>
+Tip:
+
+> 1. 冒泡则是在每一层遍历过程中找出最大的那个数（通过相邻比较，移动）
+> 2. 算法复杂度：O(n2)， 可以通过空间换取时间方法--记录每一次遍历的第二大数索引，下一次遍历从第二大数索引位置开始遍历
+
+```js
+let arr = [10, 80, 40, 60, 30, 90, 40, 50, 85];
+
+const bubbleSort = (arr) => {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+};
+
+const bubbleSortPlus = (arr) => {
+  let second_max_pos = 0; // 存储每次遍历的第二大数索引
+  for (let i = 0; i < arr.length - 1; i++) {
+    let j = second_max_pos; // 从每次遍历之后的第二大数的索引开始遍历
+    second_max_pos = 0; // 每次第二层遍历开始前重置
+    for (j; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        if (arr[j] > arr[second_max_pos]) {
+          second_max_pos = j;
+        }
+      }
+    }
+  }
+};
+
+bubbleSortPlus(arr);
+```
+
+</details>
+
+<hr>
+
 ### 第 14 题：情人节福利题，如何实现一个 new
 
 <details>
