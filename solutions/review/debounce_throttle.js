@@ -1,21 +1,8 @@
-function debounce(fn, delay) {
-  let timer = null;
-  return (...args) => {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn.apply(this, args);
-      timer = null;
-    }, delay);
-  };
-}
+// **Review Record ** //
+/*
+1. date: 2022-5-7 -- 05: 00
+2. date: 2022-5-9 -- 04: 00
+*/
 
-function throttle(fn, delay) {
-  let canRun = false;
-  return (...args) => {
-    if (canRun) return;
-    canRun = setTimeout(() => {
-      fn.apply(this, args);
-      canRun = true;
-    }, delay);
-  };
-}
+function debounce(fn, delay) {}
+function throttle(fn, delay) {}
