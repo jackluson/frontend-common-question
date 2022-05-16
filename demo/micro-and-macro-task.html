@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="btn1">ADD</button>
+    <button class="btn2">start setTimeout</button>
+    <button class="btn3">start requestAnimationFrame</button>
+    <button class="btn4">start promise</button>
+    <button class="btn5">start MessageChannel</button>
+    <div class="log"></div>
+    <script>
+      const button = document.querySelector('.btn1');
+      const logEl = document.querySelector('.log');
+      button.addEventListener('click', () => {
+        console.log('click');
+        logEl.innerHTML = logEl.innerHTML + '<br>click';
+      });
+
+      const button2 = document.querySelector('.btn2');
+      button2.addEventListener('click', () => {
+        // 可以交互， 不会造成页面卡顿
+        let pre = performance.now();
+        let count = 0;
+        const fn = () => {
+          count++;
+          if (count % 250 === 0) {
+            console.log('count', count);
+          }
+          if (performance.now() - pre < 1000 * 15) {
+            setTimeout(() => {
+              fn();
+            }, 0);
+          }
+        };
+        fn();
+      });
+
+      const button3 = document.querySelector('.btn3');
+      button3.addEventListener('click', () => {
+        // 可以交互， 不会造成页面卡顿
+        let pre = performance.now();
+        let count = 0;
+        const fn = () => {
+          count++;
+          if (count % 250 === 0) {
+            console.log('count', count);
+          }
+          if (performance.now() - pre < 1000 * 15) {
+            requestAnimationFrame(() => {
+              fn();
+            });
+          }
+        };
+        fn();
+      });
+      const button4 = document.querySelector('.btn4');
+      button4.addEventListener('click', () => {
+        // 可以交互， 不会造成页面卡顿
+        let pre = performance.now();
+        let count = 0;
+        const fn = () => {
+          Promise.resolve().then(() => {
+            count++;
+            if (count % (1000 * 100 * 3) === 0) {
+              console.log('count', count);
+            }
+            if (performance.now() - pre < 1000 * 15) {
+              fn();
+            }
+          });
+        };
+        fn();
+      });
+
+      const button5 = document.querySelector('.btn5');
+      button5.addEventListener('click', () => {
+        // 可以交互， 不会造成页面卡顿
+        let pre = performance.now();
+        let count = 0;
+        const channel = new MessageChannel();
+        const port = channel.port2;
+        const fn = () => {
+          count++;
+          if (count % (1000 * 100) === 0) {
+            console.log('count', count);
+          }
+          if (performance.now() - pre < 1000 * 15) {
+            port.postMessage(null);
+          }
+        };
+        channel.port1.onmessage = fn;
+        fn();
+      });
+    </script>
+  </body>
+</html>
